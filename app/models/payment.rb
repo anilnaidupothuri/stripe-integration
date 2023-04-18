@@ -5,7 +5,7 @@ class Payment < ApplicationRecord
   def create_on_stripe
     token = get_token
      
-    params = { amount: 50000, currency: 'inr', payment_method_types: ['card'], payment_method:token.id, customer: Customer.first.stripe_id}
+    params = { amount: 50000, currency: 'inr', payment_method_types: ['card'], payment_method:token.id, customer: Customer.last.stripe_id}
     response = Stripe::PaymentIntent.create(params)
     self.stripe_id = response.id
   end

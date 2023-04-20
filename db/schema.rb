@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_12_103726) do
+ActiveRecord::Schema.define(version: 2023_04_18_121246) do
 
   create_table "customers", force: :cascade do |t|
     t.string "name"
@@ -45,6 +45,17 @@ ActiveRecord::Schema.define(version: 2023_04_12_103726) do
     t.index ["order_id"], name: "index_payments_on_order_id"
   end
 
+  create_table "transactions", force: :cascade do |t|
+    t.integer "amount"
+    t.string "status"
+    t.string "stripe_payment_id"
+    t.integer "order_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["order_id"], name: "index_transactions_on_order_id"
+  end
+
   add_foreign_key "orders", "customers"
   add_foreign_key "payments", "orders"
+  add_foreign_key "transactions", "orders"
 end
